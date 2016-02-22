@@ -1,0 +1,20 @@
+import scrapy
+from scrapy.contrib.linkextractors.sgml import SgmlLinkExtractor
+from scrapy.contrib.spiders import CrawlSpider, Rule
+import Queue
+import thread
+import threading
+import sys
+import os.path
+
+class ENGCatcher(CrawlSpider):
+    name = "eng_catcher"
+    allowed_domains = ["ohio-state.edu", "osu.edu"]
+    start_urls = [
+        "https://engineering.osu.edu"
+    ]
+
+    rules = (Rule(SgmlLinkExtractor(), callback='parse_url', follow=False), )
+
+    def parse_url(self, response):
+        print response.url
